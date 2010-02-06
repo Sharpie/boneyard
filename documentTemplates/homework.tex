@@ -1,0 +1,68 @@
+% !TEX TS-program = Sweave
+
+\documentclass[Sweave]{homework}
+
+% Sweave setup
+\ifSweave
+	\usepackage{tikzCodeBlock}
+	\usepackage{Sweave}
+	\newcommand{\sweaveDateStamp}{\texttt\Sexpr{Sys.time()}}
+\fi
+
+
+
+%<<bootstrap,echo=F,results=hide>>=
+%	
+%	source( system.file( 'patchSweave.R', package = 'paperTools' ) ) 
+%	
+%	options( wrapoutput = c('\nswe@veSt@rtOutput','swe@veEndOutput\n') )
+%	
+%	# Required packages
+%	require(paperTools)
+%	require(ggplot2)
+%	require(tikzDevice)
+%	
+%
+%       options( tikzDocumentDeclaration = '\\documentclass[12pt,letter,article]{memoir}\n' )
+%       options( tikzLatexPackages = c("\\usepackage{tikz}\n",
+%         "\\usepackage{siunitx}\n",
+%         "\\usepackage{mhchem}\n",
+%         "\\usepackage[active,tightpage,psfixbb]{preview}\n",
+%         "\\PreviewEnvironment{pgfpicture}\n",
+%         "\\setlength\\PreviewBorder{0pt}\n"
+%       ))	
+%@
+
+% Homework information.
+\renewcommand{\hmwkTitle}{Some Homework}
+\renewcommand{\hmwkDueDate}{Due Some Day}
+\renewcommand{\hmwkClass}{For Some Class}
+\renewcommand{\hmwkAuthorName}{Charlie Sharpsteen}
+
+\renewcommand{\it}{\itshape}
+
+% Font selections
+\usepackage{mathpazo}
+
+% Additional packages.
+\usepackage{pdflscape}
+\usepackage{todonotes}
+\usepackage{multicol}
+
+% Layout tweaking
+
+% Homework Macros
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

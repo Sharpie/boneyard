@@ -1,0 +1,26 @@
+
+\documentclass{article}
+\usepackage[x11names,rgb]{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{mathrsfs}
+
+% Use preview.sty to crop the page
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2pt}%
+
+\begin{document}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel=$x$,
+        ylabel={$f(x) = x^2 - x +4$}
+    ]
+    % use TeX as calculator:
+    \addplot {x^2 - x +4};
+    \end{axis}
+\end{tikzpicture}
+
+\end{document}

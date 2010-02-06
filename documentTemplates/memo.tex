@@ -1,0 +1,55 @@
+\documentclass[pdftex,12pt]{article} 
+
+\usepackage[pdftex]{graphicx}
+\usepackage{setspace}
+
+
+% Author name, memo date, recipients
+
+\newcommand{\sentTo} {Recipients}
+\newcommand{\fromAuthor} {Charlie Sharpsteen}
+\newcommand{\memoSubject} {Subject}
+\newcommand{\theDate} {\today}
+
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+
+\begin{document}
+
+\pagestyle{empty}
+
+\hrule\smallskip
+\hrule\smallskip
+
+\begin{center}
+	{\sc Memorandum}
+\end{center}
+
+\smallskip\hrule\smallskip
+\hrule\bigskip
+
+\begin{tabular}{ll}
+	{\bf To:} & {\sc\sentTo}\\
+	{\bf From:} & {\sc\fromAuthor}\\
+	{\bf Subject:} & {\sc\memoSubject}\\
+	{\bf Date:} & {\sc\theDate}
+\end{tabular}
+
+
+\medskip\hrule\medskip
+
+\subsection*{Purpose}
+
+
+\subsection*{Discussion}
+
+\subsection*{Conclusions}
+
+\end{onehalfspacing}
+\end{document}  
