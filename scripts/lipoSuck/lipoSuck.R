@@ -22,3 +22,27 @@ libFiles <- libFiles[ !nzchar(Sys.readlink(libFiles)) ]
 cat('\nThe following libraries have been targetted for modification:\n\t',
   paste( libFiles, collapse = '\n\t' ),
   '\n')
+
+for( lib in libFiles ){
+
+  libsToAdd <- character(length( archDirs ))
+
+  for( i in 1:length(libsToAdd) ){
+
+    libsToAdd[i] <- list.files( archDirs[i], full = T )[
+      list.files( archDirs[i] ) %in% basename( lib )
+    ]
+
+  }
+
+  cat("Combining library:\n\t",
+    lib,
+    "\nWith:\n\t",
+    paste( libsToAdd, collapse = "\n\t" ),
+    "\n"
+  )
+
+  system(paste('lipo', lib, paste(libsToAdd, collapse=' '),
+    '-create -output', lib))
+
+}
