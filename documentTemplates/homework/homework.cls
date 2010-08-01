@@ -1,100 +1,89 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{homework}[2009/09/07 A Document class for homework and short reports]
+\ProvidesClass{homework}[2010/08/01 A Document class for homework and short reports]
+%---------------------------------------------------------------------
+% Author: Charlie Sharpsteen
+%
+%---------------------------------------------------------------------
+
 
 % Required to keep some latex installations from
 % running out of dimension variables.
 \RequirePackage{etex}
 
-% This class is based on Memoir
-\LoadClass[12pt,article]{memoir}
 
-% Some extra global variables provided by this class.
+%---------------------------------------------------------------------
+% Class options
+%---------------------------------------------------------------------
 
-% Set to true if we are using Sweave.
+% Load this document class with \documentclass[Sweave]{homework} if
+% you want a nice R watermark and datestamp to appear at the end of
+% the document.
 \newif\ifSweave
-
-% Initially false.
 \Sweavefalse
-
-% An option to toggle it.
 \DeclareOption{Sweave}{\Sweavetrue}
 
-% Enforce all options
+
 \ProcessOptions\relax
 
-% Memoir page setup.
+
+%---------------------------------------------------------------------
+% This class extends Memoir
+%---------------------------------------------------------------------
+
+\LoadClass[12pt,article]{memoir}
+
+
+%---------------------------------------------------------------------
+% Required packages
+%---------------------------------------------------------------------
+
+% Adds extra components used in headers and footers.
+\RequirePackage{lastpage}
+\RequirePackage{extramarks}
+
+
+%---------------------------------------------------------------------
+% Memoir page setup
+%---------------------------------------------------------------------
+
+% Narrow margins to help squeeze in extra long problems.
 \setlrmarginsandblock{1in}{1in}{*}
 \setulmarginsandblock{1in}{1in}{*}
 \setheadfoot{\baselineskip}{2em}
 \setheaderspaces{*}{2em}{*}
 \checkandfixthelayout
 
-% Tighten up itemizes and enumerates.
+% Length tweaks.
+
+% Tighten up itemizes and enumerates to save space.
 \firmlists
 
-% We load some nice math and symbol packages.
-\RequirePackage{amsfonts,amsthm,amssymb}
-\RequirePackage{mathrsfs}
-\RequirePackage[intlimits]{amsmath}
+% Paragraphs
+\setlength{\parindent}{0in}
+\setlength{\parskip}{1em}
 
+% Multiline equation spacing
+\setlength{\jot}{1em}
 
-%Defines several interesting float types, allows definition of new types annnnd...
-%Provides the [H] specifier which means "Put it RIGHT HERE"
-\RequirePackage{float}
+% Frame box separation
+\setlength{\fboxsep}{1ex}
 
-% Graphics packages
-\RequirePackage{graphicx,wrapfig}
+% Style for top-level "Problem" divisions.  This is defined by styling
+% the Memoir chapter headers.
+\setlength{\beforechapskip}{0.75em}
+\setlength{\afterchapskip}{0em}
+\renewcommand{\chaptitlefont}{\Large\bfseries}
 
-% Hyperlink support.
-\RequirePackage[pdftex,
-	plainpages=false,
-	pdfpagelabels,
-	bookmarks,
-	bookmarksnumbered,
-	draft=false,
-	breaklinks=true]{hyperref}
+% Disable normal section/chapter numbering
+\setsecnumdepth{part}
 
-% The sexiest latex package ever created
-\RequirePackage{tikz}
-
-% Libraries for TikZ
-\usetikzlibrary{decorations.pathmorphing}
-\usetikzlibrary{decorations.text}
-\usepgflibrary{decorations.pathreplacing}
-\usetikzlibrary{fit}
-\usetikzlibrary{calc}
-\usetikzlibrary{matrix}
-\usetikzlibrary{positioning}
-
-% Bibliography stuff.
-\RequirePackage{natbib}
-\bibliographystyle{agufull}
-
-% Unit handling
-
-  % In general
-  \RequirePackage{siunitx}
-  \RequirePackage{xfrac}
-  % v2.0 of the siunitx package requires
-  % some LaTeX3 support-- it should be
-  % loaded automagically.
-
-  % text and math mode.
-  \sisetup{per-mode=fraction}
-  \newcommand{\siText}{\sisetup{fraction-function=\sfrac}}
-  \newcommand{\siMath}{\sisetup{fraction-function=\frac}}
-  \siText
-
-  % Chemical formulas
-  \RequirePackage[version=3]{mhchem}
-
-% Setup the headers and footers.
-
-% Adds a reference to the last page.
-\usepackage{lastpage}
-
-% Adds extra page marks for headers and footers.
-\RequirePackage{extramarks}
+% Set up headers and footers.
+\makepagestyle{firstPage}
+\makeevenhead{firstPage}{}{}{}
+\makeoddhead{firstPage}{}{}{}
+\makeevenfoot{firstPage}{\lastxmark}{}{Page \thepage\ of \pageref{LastPage}}
+\makeoddfoot{firstPage}{\lastxmark}{}{Page \thepage\ of \pageref{LastPage}}
+\makefootrule{firstPage}{\textwidth}{\normalrulethickness}{0ex}
 
 \makepagestyle{homework}%
 \makeevenhead{homework}{\hmwkAuthorName}{\hmwkClass}{\firstxmark}%
@@ -104,41 +93,10 @@
 \makeheadrule{homework}{\textwidth}{\normalrulethickness}
 \makefootrule{homework}{\textwidth}{\normalrulethickness}{0ex}
 
-
-\makepagestyle{firstPage}
-\makeevenhead{firstPage}{}{}{}
-\makeoddhead{firstPage}{}{}{}
-\makeevenfoot{firstPage}{\lastxmark}{}{Page \thepage\ of \pageref{LastPage}}
-\makeoddfoot{firstPage}{\lastxmark}{}{Page \thepage\ of \pageref{LastPage}}
-\makefootrule{firstPage}{\textwidth}{\normalrulethickness}{0ex}
-
-% Use the homework page style
+% Default header/footer style for the whole document is homework.
 \pagestyle{homework}
 
-% Layout and length tweaking
-
-  % Paragraphs
-  \setlength{\parindent}{0in}
-  \setlength{\parskip}{1em}
-
-  % Multiline equation spacing
-  \setlength{\jot}{1em}
-
-  % Frame box seperation
-  \setlength{\fboxsep}{1ex}
-
-  % Chapter set-up
-  \setlength{\beforechapskip}{0.75em}
-  \setlength{\afterchapskip}{0em}
-  \renewcommand{\chaptitlefont}{\Large\bfseries}
-
-% Title commands.
-\newcommand{\hmwkTitle}{Another Assignment}
-\newcommand{\hmwkDueDate}{\today}
-\newcommand{\hmwkClass}{ENGR 666: Your Former Social Life}
-\newcommand{\hmwkAuthorName}{John Doe}
-
-% This command sets the title.
+% Title styling.
 \renewcommand{\maketitle}{
 	\thispagestyle{firstPage}
 	\vbox{\centering
@@ -149,6 +107,64 @@
 	}
 	\hrule
 }
+
+
+%---------------------------------------------------------------------
+% Environments for homework problems and answers
+%---------------------------------------------------------------------
+
+% Counters and variables used for homework problems.
+\newcounter{homeworkProblemCounter}
+\newcommand{\homeworkProblemName}{}
+\newcommand{\homeworkSectionName}{}
+
+
+% Macro for setting header and footer messages stating whether problems are
+% continued.
+\newcommand{\startHeader}[1]{\extramarks{}{#1 continued on next page\ldots}}
+\newcommand{\stopHeader}[1]{\extramarks{#1 (Continued)}{}}
+
+% Provides problem environments.
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]%
+  {\stepcounter{homeworkProblemCounter}%
+   \renewcommand{\homeworkProblemName}{#1}%
+   \chapter{\homeworkProblemName}%
+   \startHeader{\homeworkProblemName}}%
+  {\stopHeader{\homeworkProblemName}}%
+  
+ \newenvironment{homeworkSection}[2]{%
+   \renewcommand{\homeworkSectionName}{#1}%
+  \hangfrom{\large\bfseries\homeworkSectionName\hspace{1em}}\noindent#2}%
+  {}%
+
+
+% Useful environments and macros.
+\newenvironment{variables}%
+  {\noindent where:\begin{itemize}}%
+  {\end{itemize}}%
+  
+\newcommand{\var}[2]{
+	\item[\ensuremath{#1}]{#2}}
+
+% Boxed answers with hanging indent
+\newcommand{\ansBox}[1]{\hangfrom{\quad}\fbox{\vbox{#1}}}
+
+
+%---------------------------------------------------------------------
+% Sweave specific stuff
+%---------------------------------------------------------------------
+
+%% The sexiest latex package ever created
+%\RequirePackage{tikz}
+%
+%% Libraries for TikZ
+%\usetikzlibrary{decorations.pathmorphing}
+%\usetikzlibrary{decorations.text}
+%\usepgflibrary{decorations.pathreplacing}
+%\usetikzlibrary{fit}
+%\usetikzlibrary{calc}
+%\usetikzlibrary{matrix}
+%\usetikzlibrary{positioning}
 
 % Set an info box informing the reader that this report uses Sweave.	
 \ifSweave
@@ -197,63 +213,4 @@
 	}
 }% End \SweaveInfo
 \fi
-
-
-% This is used to trace down (pin point) problems
-% in latexing a document:
-%\tracingall
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Macros for the layout of homework problems and answers.
-
-% Counters and variables for homework problems.
-\newcounter{homeworkProblemCounter}
-\newcommand{\homeworkProblemName}{}
-\newcommand{\homeworkSectionName}{}
-
-% Disable normal section/chapter numbering
-\setsecnumdepth{part}
-
-% Macro for setting header and footer messages stating whether problems are
-% continued.
-\newcommand{\startHeader}[1]{\extramarks{}{#1 continued on next page\ldots}}
-
-\newcommand{\stopHeader}[1]{\extramarks{#1 (Continued)}{}}
-
-% Provides problem environments.
-\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]%
-  {\stepcounter{homeworkProblemCounter}%
-   \renewcommand{\homeworkProblemName}{#1}%
-   \chapter{\homeworkProblemName}%
-   \startHeader{\homeworkProblemName}}%
-  {\stopHeader{\homeworkProblemName}}%
-  
- \newenvironment{homeworkSection}[2]{%
-   \renewcommand{\homeworkSectionName}{#1}%
-  \hangfrom{\large\bfseries\homeworkSectionName\hspace{1em}}\noindent#2}%
-  {}%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Macro definitions
-
-% Derivatives and partial derivatives
-\newcommand{\deriv}[3][]{\ensuremath{\frac{d^{#1} #2}{d #3^{#1}}}}
-\newcommand{\pderiv}[3][]{\ensuremath{\frac{\partial ^{#1} #2}{\partial #3^{#1}}}}
-
-%% nice inline fractions
-\newcommand{\slanty}[2]{\ensuremath{^{#1}\!\!\hspace{1pt}/\hspace{2pt}\!\!_{#2}}\!\!\!\hspace{4pt}\ }
-
-\newenvironment{variables}%
-  {\noindent where:\begin{itemize}}%
-  {\end{itemize}}%
-  
-\newcommand{\var}[2]{
-	\item[\ensuremath{#1}]{#2}}
-
-% Boxed answers with hanging indent
-\newcommand{\ansBox}[1]{\hangfrom{\quad}\fbox{\vbox{#1}}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
