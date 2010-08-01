@@ -1,0 +1,112 @@
+% !TEX TS-program = pdflatex   or Sweave
+
+\documentclass{homework}
+%\documentclass[Sweave]{homework}
+
+%---------------------------------------------------------------------
+% Sweave setup
+%---------------------------------------------------------------------
+\ifSweave
+	\usepackage{Sweave}
+	\newcommand{\sweaveDateStamp}{\texttt\Sexpr{Sys.time()}}
+\fi
+
+%---------------------------------------------------------------------
+% Homework information
+%---------------------------------------------------------------------
+\newcommand{\hmwkTitle}{Another Assignment}
+\newcommand{\hmwkDueDate}{\today}
+\newcommand{\hmwkClass}{ENGR 666: Your Former Social Life}
+\newcommand{\hmwkAuthorName}{John Doe}
+
+
+%---------------------------------------------------------------------
+% Font selections
+%---------------------------------------------------------------------
+\usepackage{mathpazo}
+
+
+%---------------------------------------------------------------------
+% Additional Packages
+%---------------------------------------------------------------------
+
+% Support for pretty-printing numbers and units.
+\usepackage{siunitx}
+
+% Provides pretty-printing of fractions like 1/2 that look nice when used in-line
+% with text.  This package also tries to be aware of and adjust for font choices.
+\usepackage{xfrac}
+
+%---------------------------------------------------------------------
+% Layout tweaks
+%---------------------------------------------------------------------
+
+
+%---------------------------------------------------------------------
+% Macros (Shortcuts)
+%---------------------------------------------------------------------
+
+% Derivatives and partial derivatives
+\newcommand{\deriv}[3][]{\ensuremath{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}}
+\newcommand{\pderiv}[3][]{\ensuremath{\frac{\partial ^{#1} #2}{\partial #3^{#1}}}}
+
+
+%---------------------------------------------------------------------
+% The main event
+%---------------------------------------------------------------------
+\begin{document}
+\maketitle
+%---------------------------------------------------------------------
+
+\begin{homeworkProblem}
+ 
+\SI{1}{\milli\liter} of dye with a density of \SI{1.0}{\gram\per\milli\liter} is spread evenly across the top of water in a glass containing water with a density of \SI{1.0}{\gram\per\cubic\centi\meter}.  The glass has a radius of \SI{4}{\centi\meter} and depth of \SI{15}{\centi\meter}.  Assuming the dye has a typical liquid diffusion coefficient of \SI{1e-5}{\centi\meter\squared\per\second}, how long will it take for the dye concentration at the bottom of the glass to reach \sfrac{1}{10} of the equilibrium concentration?  Assume the dye immediately and uniformly spreads out across the top of the glass.
+
+\begin{homeworkSection}{a)}{How many dimensions would you use to model this system?}
+
+\ansBox{
+I would assume that the dye disperses uniformly in the radial direction such that the concentrations in $x$ and $y$ are well mixed.  I would also assume that the walls of the container do not introduce any boundary effects.  Based on these assumptions, I would neglect cocentration changes in the $x$ and $y$ directions and the only direction I would worry about would be the $z$ direction or depth of the glass.
+}
+
+\end{homeworkSection}
+
+\begin{homeworkSection}{b)}{Where would you locate the zero of the coordinate system?}
+
+\ansBox{
+I would place the zero point of the $z$ axis at the surface of the water and define positive as a direction pointing into the glass. The positive values of the $z$ coordinate would therefore represent depth below the surface.
+}
+
+\end{homeworkSection}
+
+\begin{homeworkSection}{c)}{What is the governing mass balance equation for this scenario? Include only terms that are relevant.}
+
+\ansBox{
+Assuming dispersion is the only significant transport mechanism at work, the governing equation would be:
+
+\[
+\pderiv{C\left( z,t\right)}{t} = D_{z}\pderiv[2]{C\left( z,t\right)}{z}
+\]
+
+}
+
+\end{homeworkSection}
+
+\begin{homeworkSection}{d)}{What is a boundary condition you will have to deal with? Define all distances relative to the coordinate system.}
+
+\ansBox{
+A boundary condition I would impose is that the gradient of concentration across the bottom of the glass is zero. So, if $z_{D}$ represents the depth of the glass:
+
+\[
+\left.\deriv{C}{z}\right|_{z=z_{D}} = 0\quad\forall\ t
+\]
+
+}
+
+\end{homeworkSection}
+
+
+\end{homeworkProblem}
+
+%---------------------------------------------------------------------
+\end{document}
+%---------------------------------------------------------------------
