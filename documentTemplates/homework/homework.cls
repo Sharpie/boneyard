@@ -96,16 +96,23 @@
 % Default header/footer style for the whole document is homework.
 \pagestyle{homework}
 
-% Title styling.
+% Title styling
 \renewcommand{\maketitle}{
 	\thispagestyle{firstPage}
-	\vbox{\centering
-	{\LARGE\bfseries\hmwkTitle}\\
-	\smallskip{\bfseries\hmwkAuthorName}\\
-	\small{Due\ on\ \hmwkDueDate}\\
-	\small{\itshape\hmwkClass}\vspace{0.5em}	
-	}
-	\hrule
+  \rule{\textwidth}{1.25pt}\\[0.5em]
+  \parbox{\textwidth}{
+    \centering \LARGE\bfseries\hmwkTitle
+  }\\[\baselineskip]
+  \parbox{0.33\textwidth}{
+    \raggedright Due on \hmwkDueDate
+  }\hfill%
+  \parbox{0.33\textwidth}{
+    \centering\large\bfseries\hmwkAuthorName
+  }\hfill%
+  \parbox{0.33\textwidth}{
+    \raggedleft\hmwkClass
+  }\\[0.5em]
+  \rule{\textwidth}{1.25pt}
 }
 
 
@@ -129,12 +136,15 @@
   {\stepcounter{homeworkProblemCounter}%
    \renewcommand{\homeworkProblemName}{#1}%
    \chapter{\homeworkProblemName}%
-   \startHeader{\homeworkProblemName}}%
+   \startHeader{\homeworkProblemName}%
+  }%
   {\stopHeader{\homeworkProblemName}}%
   
- \newenvironment{homeworkSection}[2]{%
-   \renewcommand{\homeworkSectionName}{#1}%
-  \hangfrom{\large\bfseries\homeworkSectionName\hspace{1em}}\noindent#2}%
+\newenvironment{homeworkSection}[2]
+  {%
+    \renewcommand{\homeworkSectionName}{#1}%
+    \hangfrom{\large\bfseries\homeworkSectionName\hspace{1em}}\noindent#2%
+  }%
   {}%
 
 
@@ -147,7 +157,7 @@
 	\item[\ensuremath{#1}]{#2}}
 
 % Boxed answers with hanging indent
-\newcommand{\ansBox}[1]{\hangfrom{\quad}\fbox{\vbox{#1}}}
+\newcommand{\ansBox}[1]{\fbox{\vbox{#1}}}
 
 
 %---------------------------------------------------------------------
