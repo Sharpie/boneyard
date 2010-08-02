@@ -122,6 +122,7 @@
 
 % Counters and variables used for homework problems.
 \newcounter{homeworkProblemCounter}
+\newcounter{homeworkSectionCounter}
 \newcommand{\homeworkProblemName}{}
 \newcommand{\homeworkSectionName}{}
 
@@ -131,17 +132,20 @@
 \newcommand{\startHeader}[1]{\extramarks{}{#1 continued on next page\ldots}}
 \newcommand{\stopHeader}[1]{\extramarks{#1 (Continued)}{}}
 
-% Provides problem environments.
+% Provides problem environment.
 \newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]%
-  {\stepcounter{homeworkProblemCounter}%
+  {%
+   \stepcounter{homeworkProblemCounter}%
    \renewcommand{\homeworkProblemName}{#1}%
    \chapter{\homeworkProblemName}%
    \startHeader{\homeworkProblemName}%
   }%
-  {\stopHeader{\homeworkProblemName}}%
-  
-\newenvironment{homeworkSection}[2]
+  {\stopHeader{\homeworkProblemName}\setcounter{homeworkSectionCounter}{0}}%
+
+% Provides homework section (sub-problem) environment. 
+\newenvironment{homeworkSection}[2][\alph{homeworkSectionCounter})]
   {%
+    \stepcounter{homeworkSectionCounter}%
     \renewcommand{\homeworkSectionName}{#1}%
     \hangfrom{\large\bfseries\homeworkSectionName\hspace{1em}}\noindent#2%
   }%
