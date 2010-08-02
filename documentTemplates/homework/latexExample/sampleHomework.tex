@@ -132,6 +132,8 @@ A boundary condition that should be imposed is that the gradient of concentratio
 % Begin problem 2
 %---------------------------------------------------------------------
 \newcommand{\napl}{{\scshape Napl}}
+\newcommand{\vol}[1]{V_{\mbox{#1}}}
+\newcommand{\mass}[1]{M_{\mbox{#1}}}
 
 A gasoline spill whose constituents are given in \autoref{tab:breakdown} occurs on a soil whose bulk density, $\rho_{b}$, is \SI{1.6}{\kilo\gram\per\liter} and has an organic carbon content of 1\%. The table shows the mass of each constituent in the Non-Aqueous Phase Liquid (\napl ). Note the table lists the constituent concentrations in the \napl\ prior to partitioning. The porosity $n=0.4$ is divided among the water, \napl\ and air phases. The \napl\ phase constitutes 5\% of the volume and the air phase 20\%. 
 
@@ -156,12 +158,9 @@ Derive a set of equations that shows the partitioning, in mass concentration, am
 \end{table}
 
 
-
 \begin{homeworkSection}[Volume Breakdown]{}
 
 The first task is to determine the fraction of a representative \SI{1}{\liter} volume that will be occupied by each constituent.  This can be accomplished using the porosity, $n$, and the information concerning the fraction of the void space occupied by the air, water and \napl\ phases:
-
-\newcommand{\vol}[1]{V_{\mbox{#1}}}
 
 \begin{align}
 \label{eqn:volBreakdown}
@@ -173,6 +172,56 @@ The first task is to determine the fraction of a representative \SI{1}{\liter} v
 
 \end{homeworkSection}
 
+
+\begin{homeworkSection}[Mass Balance]{}
+
+The next step is to use a mass balance to determine the equilibrium concentrations in each phase for a given constituent. The total mass of a given constituent in the system follows the following relationships:
+
+\begin{align}
+  \mass{total} = \mass{\napl} + \mass{water} + \mass{soil} + \mass{air} \nonumber\\
+  M_{total} = C^{*}_{\mbox{\napl}}\cdot\vol{\napl}
+\end{align}
+
+\begin{variables}
+  \var{C^{*}_{\mbox{\napl}}}{Is the concentration of the constituent in the \napl\ prior to partitioning.}
+\end{variables}
+
+\end{homeworkSection}
+
+
+\begin{homeworkSection}[Air Phase]{}
+
+The mass of the contaminant in the air phase can be derived as a function of the equilibrium concentration in the water phase. The first step is to determine the partial pressure of the contaminant using Henry’s Law:
+
+\[
+P_{\mbox{air}}\left(\si{\milli\atmosphere}\right) = \frac{
+  C_{\mbox{water}}\left(\si{\milli\gram\per\liter}\right)
+}{
+ \mathcal{M}\left(\si{\gram\per\mole}\right)
+}\cdot H_{g}\left(\si{\atmosphere\liter\per\mole}\right)
+\]
+
+\begin{variables}
+  \var{\mathcal{M}}{Is the molar mass of the constituent.}
+  \var{H_{g}}{Is the Henry's Law constant for the constituent.}
+\end{variables}
+
+Using the ideal gas law, the the mass of the constituent on the air phase may be obtained:
+
+\begin{align}
+n_{\mbox{air}} = \frac{
+  P_{\mbox{air}}\left(\si{\milli\atmosphere}\right)\cdot\vol{air}\left(\si{\liter}\right)
+}{
+  R\left(\si{\liter\atmosphere\per\mole\per\kelvin}\right)\cdot T\left(\si{\kelvin}\right)
+}\nonumber\\
+\mass{air}\left(\si{\milli\gram}\right) = n_{\mbox{air}}\left(\si{\milli\mole}\right)\cdot
+  \mathcal{M}\left(\si{\gram\per\mole}\right) =
+  \mathcal{M}\cdot\frac{P_{\mbox{air}}\cdot\vol{air}}{R\cdot T}\nonumber\\
+= \mathcal{M}\cdot\frac{C_{\mbox{water}}}{\mathcal{M}}\cdot H_{g}\cdot\frac{\vol{air}}{R\cdot T}\nonumber\\
+= C_{\mbox{water}}\cdot\frac{H_{g}\cdot\vol{air}}{R\cdot T}
+\end{align}
+
+\end{homeworkSection}
 
 %---------------------------------------------------------------------
 \end{homeworkProblem}
