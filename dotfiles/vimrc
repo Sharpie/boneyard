@@ -1,0 +1,38 @@
+" Ensure correct highlighting for 
+" fortran free source and turn
+" highlighting on
+let fortran_free_source=1
+filetype plugin indent on
+syntax on
+
+" Turn on code folding
+let fortran_fold=1
+let fortran_fold_conditionals=1
+let fortran_do_enddo=1
+set foldmethod=syntax
+set nowrap
+
+" Set hard wrap for lines
+set textwidth=80
+
+" Turn on line numbers and
+" row/column numbers
+set nu
+set ruler
+set showcmd
+
+set smarttab
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+" Fix backspace key
+set bs=2
+
+" Set searching
+set incsearch
+set ignorecase
+set smartcase
+
+" SCSS syntax highlighting.
+au BufRead,BufNewFile *.scss set filetype=scss
