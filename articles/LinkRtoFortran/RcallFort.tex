@@ -1,0 +1,181 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ...
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage[pdftex,breaklinks]{hyperref}
+\usepackage{mathpazo}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in
+\headsep=0.25in         %
+
+\parindent=0in
+
+\newcommand{\mybox}[1]{\fbox{\begin{minipage}{\textwidth}%
+#1
+\end{minipage}}}
+
+\begin{document}
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+{\Large\bf Calling a Fortran Routine from R}\hrule
+\vskip 0.75cm
+First, rewrite the Fortran routine(s) as subroutines. The next step is to compile the source code file(s) containg the subroutine(s) into a shared library. For Windows, this is a {\tt .dll} file, for Linux and Mac OS X it is a {\tt .so} file. This can be accomplished two ways:\bigskip
+
+\mybox{
+From the command line:\\
+{\tt R CMD SHLIB -o libraryName.so fortranSource.f90}
+}\bigskip
+
+\mybox{
+From inside the R GUI:\\
+{\tt system('R CMD SHLIB -o libraryName.so fortranSource.f90')}
+}\bigskip
+
+{\bf Note:} Windows users will need to install the Rtools package located at: 
+
+\begin{center}
+  \url{http://www.murdoch-sutherland.com/Rtools/}
+\end{center}
+ 
+in order to provide the command line tools {\tt R CMD SHLIB} requires to do it's thing. Windows users should also use {\tt libraryName.dll} instead of {\tt libraryName.so}.\\
+
+ Once the shared library has been created, it can be loaded into R using the {\tt dyn.load} command:\bigskip
+
+\mybox{
+{\tt dyn.load('/path/to/shared/library/')}
+}\bigskip
+
+Once the {\tt dyn.load} command has been executed, the Fortran subroutines contained in the library are available for use. A Fortran subroutine is accessed by R using the {\tt .Fortran} command. If a Fortran subroutine for vector-vector multiplication looked like:\bigskip
+
+\begin{center}
+\begin{minipage}{12cm}
+\begin{Verbatim}[
+    frame=single,
+    framesep=3mm,
+    numbers=left,
+    fontshape=tt,
+    label=\bf{Example Fortran subroutine}
+    ]
+subroutine vecMult(a,b,n,result)
+  implicit none
+  integer, intent(in)::n
+  double precision, dimension(n), intent(in)::a,b
+  double precision, intent(out)::result
+
+  integer::i
+
+  result = 0d0
+
+  do i = 1,n
+    result = result + a(i)*b(i)
+  end do
+  
+  return
+end subroutine vecMult
+\end{Verbatim}
+\end{minipage}
+\end{center}
+\vskip 0.5cm
+
+where {\tt a} and {\tt b} are vectors of {\tt n} double precision numbers, {\tt n} is an integer and {\tt result} is a double precision number, the {\tt .Fortran} statement would have the following structure:\bigskip
+
+\mybox{
+{\tt .Fortran('vecMult',a=as.double(rA),\\
+\hspace*{1cm}b=as.double(rB),n=as.integer(rn)),result=as.double(res))}
+}\bigskip
+
+Where {\tt rA}, {\tt rB}, {\tt rn} and {\tt res} are variables in the R environment that are to be passed into the Fortran subroutine. The variables and values are wrapped in {\tt as.double()} and {\tt as.integer()} functions to ensure they are formatted as the Fortran language expects them to be. Character strings (containing information such as filenames) would be wrapped in {\tt as.character()}\bigskip
+
+{\tt .Fortran} returns a single object called a list variable that contains a copy of each argument as it was returned by the subroutine that was called. This can be quite unwieldy if only a single argument or two is of interest. Furthermore, arrays and vectors are stripped of their shapes during the interfacing process and are returned as lists of numbers. The solution to both these problems is to encase the {\tt .Fortran} call in a {\it wrapper function}. For example, if only the value of {\tt result} was of interest in the example above, the wrapper function might look something like the following:\vskip 0.5cm
+
+\begin{center}
+\begin{minipage}{10cm}
+\begin{Verbatim}[
+    frame=single,
+    framesep=3mm,
+    numbers=left,
+    fontshape=tt,
+    label=\bf{Example R Wrapper Function}
+    ]
+vecTimes <- function(rA,rB,rn,res){
+
+    out <- .Fortran(
+            'vecMult',
+            a=as.double(rA),
+            b=as.double(rB),
+            n=as.integer(rn),
+            result=as.double(res)
+        )
+
+    return(out$result)
+}
+\end{Verbatim}
+\end{minipage}
+\end{center}
+\vskip 0.5 cm
+In the example above, line 1 defines a new R function named {\tt vecTimes} which accepts four arguments- the variables {\tt rA}, {\tt rB}, {\tt rn}, and {\tt res}. lines 3-9 call {\tt .Fortran} using those arguments and assign the results to the variable {\tt out}. Finally, line 11 designates {\tt result}, the desired value, as the return value of function {\tt vecTimes}. The wrapper function could be invoked in R as follows with the result being stored in a variable named {\tt val}:\bigskip
+
+\mybox{
+{\tt val <- vecTimes(rA,rB,rn)}
+}\bigskip
+
+Wrapper functions can also be structured so that the number of arguments required is reduced. For example, R can determine the length of the vectors, {\tt n}, with the {\tt length()} function, and the variable {\tt res} is not necessary as an input, it is only an output (due to the {\tt intent(out)} declaration in the subroutine).\vfill\newpage
+
+An improved wrapper function along with the {\tt dyn.load} call could be stored in a R script file, say {\tt foo.R}, which contained the following:\vskip 0.5cm
+
+\begin{center}
+\begin{minipage}{12cm}
+\begin{Verbatim}[
+    frame=single,
+    framesep=3mm,
+    numbers=left,
+    fontshape=tt,
+    label=\bf{Example R Script for Fortran Interfacing}
+    ]
+dyn.load('/path/to/shared/library/')
+
+vecTimes <- function(rA,rB){
+
+    out <- .Fortran (
+            'test',
+            a = as.double(rA),
+            b = double(rB),
+            n = as.integer(length(rA)),
+            result = as.double(0)
+        )
+
+    return(out$result)
+}
+\end{Verbatim}
+\end{minipage}
+\end{center}
+\vskip 0.5cm
+The script above illustrates the power of wrapper functions. While the Fortran subroutine requires 4 inputs, the wrapper function requires only 2-- the {\tt rA} and {\tt rB} vectors. Since {\tt result} is an output of the subroutine, line 10 passes a dummy value of the right type (in this case a double precision zero). The Fortran subroutine is ignorant of the origin of the arguments it receives- they can be variables, elments and sections of R vectors or arrays or even numbers which are not tied to any concrete variable in the R environment. As long as the arguments are of the length and type expected by the Fortran subroutine everything will work out.
+\\\\
+The script above can be loaded after starting R by executing the {\tt source} command:\bigskip
+
+\mybox{
+{\tt source('/path/to/foo.R')}
+}\bigskip
+
+Or by choosing Source File... from the File menu in the R GUI. Once the script has been run, the Fortran library has been loaded, the wrapper function has been defined, and you're ready to rock and roll.
+\\\\
+\vfill
+\begin{center}
+\huge\bf Happy Coding!
+\end{center}
+\end{document}
