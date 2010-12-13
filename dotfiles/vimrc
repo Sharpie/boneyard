@@ -1,3 +1,6 @@
+" Vim goodness plz
+set nocompat
+
 " Ensure correct highlighting for 
 " fortran free source and turn
 " highlighting on
@@ -36,3 +39,10 @@ set smartcase
 
 " SCSS syntax highlighting.
 au BufRead,BufNewFile *.scss set filetype=scss
+
+" Use tab instead of escape to switch modes.
+nnoremap <Tab> <Esc>
+vnoremap <Tab> <Esc>gV
+onoremap <Tab> <Esc>
+inoremap <Tab> <Esc>`^
+inoremap <Leader><Tab> <Tab>

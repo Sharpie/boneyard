@@ -1,0 +1,24 @@
+# PATH setup
+# Place /usr/local/bin first in path so that Homebrew binaries
+# overrule Apple binaries.
+export PATH=/usr/local/bin:$PATH
+# Haskell
+export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
+# Erlang
+export PATH=$PATH:$HOME/.local/bin:/usr/local/erlware/lib/erlang/bin
+# JavaScript
+export PATH=/usr/local/narwhal/bin:$PATH
+export NARWHAL_ENGINE=jsc
+# MATLAB
+export PATH=$PATH:/Applications/MATLAB_R2010a.app/bin
+# Python 2.7
+export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+
+
+# Pretty printing of ls output
+export CLICOLOR='cons25'
+export LSCOLORS='ExFxCxDxBxegedabagacad'
+
+export EDITOR=vim
+
