@@ -1,5 +1,13 @@
 " Vim goodness plz
-set nocompat
+set nocompatible
+set noswapfile  " Anoooooooying
+set title
+set enc=utf-8
+filetype on
+if has("statusline")
+  set statusline=%<%f\ %h%m%r%=%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}%k\ %-14.(%l,%c%V%)\ %P
+  set laststatus=2
+endif
 
 " Ensure correct highlighting for 
 " fortran free source and turn
@@ -13,10 +21,10 @@ let fortran_fold=1
 let fortran_fold_conditionals=1
 let fortran_do_enddo=1
 set foldmethod=syntax
-set nowrap
 
 " Set hard wrap for lines
-set textwidth=80
+set textwidth=79
+set nowrap
 
 " Turn on line numbers and
 " row/column numbers
@@ -26,6 +34,8 @@ set showcmd
 
 set smarttab
 set expandtab
+set smartindent
+set autoindent
 set tabstop=2
 set shiftwidth=2
 
@@ -37,10 +47,24 @@ set incsearch
 set ignorecase
 set smartcase
 
+" Python files.
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 colorcolumn=79
+
+" Vagrantfiles are ruby files
+au BufRead,BufNewFile Vagrantfile set filetype=ruby
+
 " SCSS syntax highlighting.
 au BufRead,BufNewFile *.scss set filetype=scss
 
-" Use tab instead of escape to switch modes.
+" Whitespace gestapo
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+" Use tab to switch modes.
 nnoremap <Tab> <Esc>
 vnoremap <Tab> <Esc>gV
 onoremap <Tab> <Esc>
