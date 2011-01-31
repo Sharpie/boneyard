@@ -4,6 +4,10 @@ set noswapfile   " Anoooooooying
 set title        " Set terminal title when vim is open
 set enc=utf-8    " Always make UTF-8 files
 
+" Pathogen is a Vim plugin that makes it easy to install other Vim plugins
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
 filetype plugin indent on
 syntax on
 
