@@ -1,3 +1,6 @@
 [submodule "dotfiles/vim/bundle/conque"]
 	path = dotfiles/vim/bundle/conque
 	url = https://github.com/vim-scripts/Conque-Shell.git
+[submodule "dotfiles/vim/bundle/r-plugin"]
+	path = dotfiles/vim/bundle/r-plugin
+	url = https://github.com/vim-scripts/Vim-R-plugin.git
