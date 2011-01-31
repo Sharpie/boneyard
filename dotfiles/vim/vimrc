@@ -46,13 +46,24 @@ set incsearch
 set ignorecase
 set smartcase
 
-" Whitespace Gestapo; finds stray spaces at end of lines
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+if has('autocmd')
+  " Whitespace Gestapo; finds stray spaces at end of lines
+  " Dont do this if the filetype indicates Conque is running!
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  autocmd BufWinEnter *\
+        \ if &ft != 'conque_term' |
+        \   match ExtraWhitespace /\s\+$/ |
+        \ endif
+  autocmd InsertEnter *
+        \ if &ft != 'conque_term' |
+        \   match ExtraWhitespace /\s\+\%#\@<!$/ |
+        \ endif
+  autocmd InsertLeave *
+        \ if &ft != 'conque_term' |
+        \   match ExtraWhitespace /\s\+$/ |
+        \ endif
+  autocmd BufWinLeave * call clearmatches()
+endif
 
 
 "---------------------------------------------------------
