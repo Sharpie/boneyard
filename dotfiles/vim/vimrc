@@ -1,43 +1,38 @@
-" Vim goodness plz
-set nocompatible
-set noswapfile  " Anoooooooying
-set title
-set enc=utf-8
-filetype on
-if has("statusline")
-  set statusline=%<%f\ %h%m%r%=%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}%k\ %-14.(%l,%c%V%)\ %P
-  set laststatus=2
-endif
+set nocompatible " Vim goodness plz
+set noswapfile   " Anoooooooying
 
-" Ensure correct highlighting for 
-" fortran free source and turn
-" highlighting on
-let fortran_free_source=1
+set title        " Set terminal title when vim is open
+set enc=utf-8    " Always make UTF-8 files
+
 filetype plugin indent on
 syntax on
 
-" Turn on code folding
-let fortran_fold=1
-let fortran_fold_conditionals=1
-let fortran_do_enddo=1
-set foldmethod=syntax
 
-" Set hard wrap for lines
+"---------------------------------------------------------
+" Default Options, some overriden later based on filetypes
+"---------------------------------------------------------
+
+" Set hard wrap for lines and no text wrapping.
 set textwidth=79
 set nowrap
 
-" Turn on line numbers and
-" row/column numbers
-set nu
-set ruler
-set showcmd
-
+" Indentation options
 set smarttab
 set expandtab
 set smartindent
 set autoindent
 set tabstop=2
 set shiftwidth=2
+
+" Turn on line numbers and row/column numbers
+set nu
+set ruler
+set showcmd
+
+if has("statusline")
+  set statusline=%<%f\ %h%m%r%=%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}%k\ %-14.(%l,%c%V%)\ %P
+  set laststatus=2
+endif
 
 " Fix backspace key
 set bs=2
@@ -47,16 +42,7 @@ set incsearch
 set ignorecase
 set smartcase
 
-" Python files.
-autocmd FileType python setlocal shiftwidth=4 tabstop=4 colorcolumn=79
-
-" Vagrantfiles are ruby files
-au BufRead,BufNewFile Vagrantfile set filetype=ruby
-
-" SCSS syntax highlighting.
-au BufRead,BufNewFile *.scss set filetype=scss
-
-" Whitespace gestapo
+" Whitespace Gestapo; finds stray spaces at end of lines
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
@@ -64,9 +50,24 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" Use tab to switch modes.
-nnoremap <Tab> <Esc>
-vnoremap <Tab> <Esc>gV
-onoremap <Tab> <Esc>
-inoremap <Tab> <Esc>`^
-inoremap <Leader><Tab> <Tab>
+
+"---------------------------------------------------------
+" Filetype-Specific Options
+"---------------------------------------------------------
+" Fortran
+let fortran_free_source=1
+
+if has("autocmd")
+  " HTML
+  autocmd FileType html setlocal textwidth=0
+
+  " Python
+  autocmd FileType python setlocal shiftwidth=4 tabstop=4 colorcolumn=79
+
+  " SCSS syntax highlighting.
+  autocmd BufRead,BufNewFile *.scss set filetype=scss
+
+  " Vagrantfiles are ruby files
+  autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+endif
+
