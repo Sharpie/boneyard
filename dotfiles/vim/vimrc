@@ -28,6 +28,10 @@ set autoindent
 set tabstop=2
 set shiftwidth=2
 
+" Customize tab completion for filenames
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,.svn,.hg
+
 " Turn on line numbers and row/column numbers
 set nu
 set ruler
@@ -74,7 +78,13 @@ let fortran_free_source=1
 
 if has("autocmd")
   " HTML
+  " no hard wraps cause URLS are quite long and nesting is usually quite deep
+  " which leads to inconvienant line wrapping which leads to strong languange
+  " and strong drink
   autocmd FileType html setlocal textwidth=0
+
+  " Makefiles
+  autocmd FileType make setlocal noexpandtab
 
   " Python
   autocmd FileType python setlocal shiftwidth=4 tabstop=4 colorcolumn=79
@@ -82,7 +92,7 @@ if has("autocmd")
   " SCSS syntax highlighting.
   autocmd BufRead,BufNewFile *.scss set filetype=scss
 
-  " Vagrantfiles are ruby files
-  autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+  " Misc. ruby files
+  autocmd BufRead,BufNewFile {Rakefile,Vagrantfile} set filetype=ruby
 endif
 
