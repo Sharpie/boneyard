@@ -4,3 +4,6 @@
 [submodule "dotfiles/vim/bundle/r-plugin"]
 	path = dotfiles/vim/bundle/r-plugin
 	url = https://github.com/vim-scripts/Vim-R-plugin.git
+[submodule "dotfiles/vim/bundle/nerd-tree"]
+	path = dotfiles/vim/bundle/nerd-tree
+	url = https://github.com/vim-scripts/The-NERD-tree.git
