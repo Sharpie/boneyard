@@ -87,10 +87,14 @@ if has("autocmd")
   autocmd FileType make setlocal noexpandtab
 
   " Python
-  autocmd FileType python setlocal shiftwidth=4 tabstop=4 colorcolumn=79
+  autocmd FileType python setlocal shiftwidth=4 tabstop=4 colorcolumn=80
+  autocmd BufRead,BufNewFile *.pyd set filetype=pyrex
 
   " SCSS syntax highlighting.
   autocmd BufRead,BufNewFile *.scss set filetype=scss
+
+  " TikZ files are LaTeX files
+  autocmd BufRead,BufNewFile *.tikz set filetype=tex
 
   " Misc. ruby files
   autocmd BufRead,BufNewFile {Rakefile,Vagrantfile} set filetype=ruby
