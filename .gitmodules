@@ -10,3 +10,6 @@
 [submodule "dotfiles/vim/bundle/nerd-commenter"]
 	path = dotfiles/vim/bundle/nerd-commenter
 	url = https://github.com/vim-scripts/The-NERD-Commenter.git
+[submodule "dotfiles/vim/bundle/markdown-syntax"]
+	path = dotfiles/vim/bundle/markdown-syntax
+	url = git://github.com/vim-scripts/Markdown.git
