@@ -12,7 +12,7 @@ export NARWHAL_ENGINE=jsc
 # MATLAB
 export PATH=$PATH:/Applications/MATLAB_R2010a.app/bin
 # Python 2.7
-export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+export PATH=/usr/local/share/python:/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
 
