@@ -1,4 +1,5 @@
 #                            Bash Profile for OS X
+source $HOME/.profile
 set -o vi
 if [ -f $HOME/bin/my-fortune ]; then
   $HOME/bin/my-fortune
