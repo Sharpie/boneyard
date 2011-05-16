@@ -16,3 +16,6 @@
 [submodule "dotfiles/vim/bundle/taglist"]
 	path = dotfiles/vim/bundle/taglist
 	url = git://github.com/vim-scripts/taglist.vim.git
+[submodule "dotfiles/vim/bundle/loremipsum"]
+	path = dotfiles/vim/bundle/loremipsum
+	url = https://github.com/vim-scripts/loremipsum.git
