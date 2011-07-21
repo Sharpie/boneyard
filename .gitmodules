@@ -19,3 +19,9 @@
 [submodule "dotfiles/vim/bundle/loremipsum"]
 	path = dotfiles/vim/bundle/loremipsum
 	url = https://github.com/vim-scripts/loremipsum.git
+[submodule "dotfiles/vim/bundle/rst-tables"]
+	path = dotfiles/vim/bundle/rst-tables
+	url = https://github.com/vim-scripts/RST-Tables.git
+[submodule "dotfiles/vim/bundle/wiki-sytax"]
+	path = dotfiles/vim/bundle/wiki-sytax
+	url = https://github.com/vim-scripts/wiki.vim.git
