@@ -96,7 +96,7 @@ if has("autocmd")
 
 
   " Markdown files
-  autocmd BufRead,BufNewFile {*.md,*.markdown} set filetype=markdown
+  autocmd BufRead,BufNewFile {*.md,*.mdown,*.markdown,*.ronn} set filetype=markdown
 
 
   " Python
